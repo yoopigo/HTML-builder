@@ -3,15 +3,35 @@ const fs = require('fs');
 const path = require('path');
 const content = process.argv.slice(2);
 
-stdout.write('Привет, введите ваш текс\n');
+const filePath = path.join(__dirname, 'text.txt');
 
-stdin.on('data', (data) => {
-  fs.writeFile(path.join(__dirname, 'text.txt'), data, (error) => {
-    if (error) {
-      throw error;
-    } else {
-      console.log('Файл создан');
+fs.writeFile(filePath, content.join(''), (error) => {
+  if (error) {
+    throw error;
+  } else {
+    inputText();
+  }
+});
+
+process.on('SIGINT', () => {
+  console.log('Ввод данных завершен');
+  exit();
+});
+
+function inputText() {
+  stdout.write(`Введите ваш текст: `);
+  stdin.on('data', (data) => {
+    if (data.toString().trim() === 'exit') {
+      console.log(`Ввод данных завершен`);
       exit();
+    } else {
+      fs.appendFile(filePath, data, (error) => {
+        if (error) {
+          throw error;
+        } else {
+          console.log('Текст успешно добавлен в файл');
+        }
+      });
     }
   });
-});
+}
