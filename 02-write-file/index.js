@@ -29,7 +29,7 @@ function inputText() {
         if (error) {
           throw error;
         } else {
-          console.log('Текст успешно добавлен в файл');
+          console.log('Текст добавлен в файл');
         }
       });
     }
