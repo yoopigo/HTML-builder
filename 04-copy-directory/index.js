@@ -41,10 +41,7 @@ async function removeFolder(folderPath) {
     }
     await fs.rmdir(folderPath);
   } catch (error) {
-    if (error.code === 'ENOENT') {
-    } else {
-      console.error(error);
-    }
+    console.error(error);
   }
 }
 
