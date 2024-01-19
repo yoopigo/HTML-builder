@@ -45,11 +45,13 @@ async function removeFolder(folderPath) {
   }
 }
 
-(async function () {
+const copyFileFolder = async function () {
   try {
     await removeFolder(filePathCopy);
     await copyFolder(filePath, filePathCopy);
   } catch (error) {
     console.error(error);
   }
-})();
+};
+
+copyFileFolder();
