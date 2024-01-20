@@ -29,6 +29,8 @@ async function copyFolder(from, to) {
 
 async function removeFolder(folderPath) {
   try {
+    await fs.access(folderPath);
+
     const files = await fs.readdir(folderPath);
     for (const file of files) {
       const filePath = path.join(folderPath, file);
@@ -41,17 +43,18 @@ async function removeFolder(folderPath) {
     }
     await fs.rmdir(folderPath);
   } catch (error) {
-    console.error(error);
+    if (error.code === 'ENOENT') {
+    } else {
+      console.error(error);
+    }
   }
 }
 
-const copyFileFolder = async function () {
+(async function () {
   try {
     await removeFolder(filePathCopy);
     await copyFolder(filePath, filePathCopy);
   } catch (error) {
     console.error(error);
   }
-};
-
-copyFileFolder();
+})();
