@@ -97,11 +97,13 @@ async function replaceTemplates() {
     const headerTemplate = await fs.readFile(path.join(componentsPath, 'header.html'));
     const articlesTemplate = await fs.readFile(path.join(componentsPath, 'articles.html'));
     const footerTemplate = await fs.readFile(path.join(componentsPath, 'footer.html'));
+    const aboutTemplate = await fs.readFile(path.join(componentsPath, 'about.html'));
 
     const updatedTemplate = templateContent
       .replace('{{header}}', headerTemplate)
       .replace('{{articles}}', articlesTemplate)
-      .replace('{{footer}}', footerTemplate);
+      .replace('{{footer}}', footerTemplate)
+      .replace('{{about}}', aboutTemplate);
 
     await fs.writeFile(path.join(distPath, 'index.html'), updatedTemplate);
   } catch (error) {
