@@ -90,22 +90,6 @@ async function getCssBundle() {
 
 async function replaceTemplates() {
   try {
-    const templatePath = path.join(__dirname, 'template.html');
-    const templateContent = await fs.readFile(templatePath, 'utf-8');
-    const componentsPath = path.join(__dirname, 'components');
-
-    const templates = {};
-    const files = await fs.readdir(componentsPath);
-    for (const file of files) {
-      const templateName = file.split('.')[0];
-      templates[templateName] = await fs.readFile(path.join(componentsPath, file), 'utf-8');
-    }
-
-    let updatedTemplate = templateContent;
-    Object.keys(templates).forEach((templateName) => {
-      updatedTemplate = updatedTemplate.replace(new RegExp('{{' + templateName + '}}', 'g'), templates[templateName]);
-    });
-
     await fs.writeFile(path.join(distPath, 'index.html'), updatedTemplate);
   } catch (error) {
     console.log(error);
